@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MESA</title>
+
+	<meta charset="utf-8">
+
+	<script
+	  src="https://code.jquery.com/jquery-3.3.1.min.js"
+	  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+	  crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+
+	<link href="https://fonts.googleapis.com/css?family=Oswald|Source+Sans+Pro|Staatliches" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+
+	<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript">
+		
+	</script>
+
+	<style type="text/css">
+		.container .square{
+			border: solid red 1px;
+			text-align: -webkit-center;
+			padding: 20px;
+		}
+
+		.foto{
+			margin: 10px;
+		}
+
+		.user-card{
+			border: solid green 1px;
+			border-radius: 10px;
+			text-align: -webkit-center;
+			width: 80%;
+
+		}
+
+		.foto{
+			width: 60%;
+			height: 80px;
+			border: solid blue 2px;
+			border-radius: 10px;
+		}
+
+
+		#lifebar-hp {
+			width: 90%;
+			height: 30px;
+			display: block;
+			background-color: red;
+			border-radius: 100px;
+		}
+
+	</style>
+
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 square">
+				<button onclick="addCard()">Adc Jogador</button>
+				<button onclick="addRowCards(lock)">Adc cards</button>
+				<button onclick="dano()">Causar Dano</button>
+			</div>
+		</div>
+
+		<div class="row" id="second-row">
+			<div class="col-md-4 square">
+				<div class="user-card">
+
+					<h4>Nome</h4>
+					<div class="foto" align="">
+						foto
+						a
+					</div>
+
+					<div class="status">
+
+						<div id="lifebar" class="row">
+							<div id="lifebar-field" class="col-md-12">
+								<span id="lifebar-hp">HP</span>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-6">
+								PWR: 100
+							</div>
+							<div class="col-md-6">
+								SRT: 100
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								ATK: 100
+							</div>
+							<div class="col-md-6">
+								DEF: 100
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								SPD: 100
+							</div>
+							<div class="col-md-6">
+								CLASS: KNIGHT
+							</div>
+						</div>
+						
+						
+						
+						
+						<div id="skills" class="row">
+							<div id="skills-field" class="col-md-12">
+								<strong>- SKILLS -</strong><p>
+								Fogo<br>
+								Gelo<br>
+								Cura<br>
+								Escudo Mágico<br>
+							</div>
+						</div>
+
+						<div id="mochila" class="row">
+							<div id="mochila-field" class="col-md-12">
+								<strong>- ITENS -</strong><p>
+								Poção Vida<br>
+								Poção Mana<br>
+								Espada Quebrada<br>
+								800 Golds<br>
+							</div>
+						</div>
+
+
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 square">
+				<div class="user-card">
+					status
+				</div>
+			</div>
+			<div class="col-md-4 square">
+				<div class="user-card">
+					status
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<script type="text/javascript">
+		var addCard = ()=>{
+			console.log('clikcado');
+
+			var second_row = document.getElementsByClassName('row')[1];
+
+			var texto = document.createTextNode('ola');
+
+			var spam = document.createElement('spam');
+
+			spam.appendChild(texto);
+			second_row.appendChild(spam);
+
+
+		}
+
+		var lock = 0;
+		var addRowCards = (e)=>{
+			console.log('clikcado');
+
+			if (this.lock >= 3) return console.log('não pode mais criar');
+
+			var container = document.getElementsByClassName('container')[0];
+			var second_row = document.getElementsByClassName('row')[1].innerHTML;
+
+			var rows = '<div class="row"><div class="col-md-4 square"><div class="user-card"><div class="foto" align="">fotoa</div><div class="status">PWR: 100<br>ATK: 100<br>DEF: 100<br>SRT: 100<br>SPD: 100<br><div id="skills">- SKILLS -<p>Fogo<br>Gelo<br>Cura<br>Escudo<br></div></div></div></div><div class="col-md-4 square"><div class="user-card">status</div></div><div class="col-md-4 square"><div class="user-card">status</div></div</div>';
+
+			this.lock++;
+
+			var id = this.lock;
+			id= id+1;
+
+			container.insertAdjacentHTML('beforeEnd',('<div id="row'+id+'" class="row" >'+second_row+' </div>'));
+
+			
+			console.log(this.lock,e)
+
+
+		}
+
+		var dano = ()=>{
+
+			var hp = document.getElementById('lifebar-hp');
+
+			var wid = hp.offsetWidth;
+
+			console.log('valor:',wid);
+
+			var resultado = wid-20;
+
+			if (resultado <= 0) return hp.innerText = "MORREU" ;
+
+			hp.style.width = resultado+"px";
+
+			console.log(resultado);
+		}
+
+	</script>
+</body>
+</html>
