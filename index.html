@@ -1,216 +1,337 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>MESA</title>
-
-	<meta charset="utf-8">
-
-	<script
-	  src="https://code.jquery.com/jquery-3.3.1.min.js"
-	  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-	  crossorigin="anonymous"></script>
-
-	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
-
-	<link href="https://fonts.googleapis.com/css?family=Oswald|Source+Sans+Pro|Staatliches" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
-
-
-	<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+	<title></title>
 
 	<script type="text/javascript">
-		
+		const mesa = {
+			player1: {hp: 100, mt: 10, hit: 80, crt: 25, luck: 30, c:1},
+			player2: {hp: 100, mt: 10, hit: 80, crt: 25, luck: 30, c:2},
+			cpu: {hp: 100, mt: 10, hit: 80, crt: 25, luck: 30, c:"CPU"},
+
+			gameStart: false,
+			gameOver: false,
+			turn:0,
+			battleLock: false,
+
+			drawSceneLogo: _=>{
+
+				document.getElementById("logo").style.background = 'url("files/Fire_Emblem_logo.png")  center / 725px no-repeat';
+				// document.getElementById("logo").style.backgroundSize = '400px';
+				// document.getElementById("demo").style.backgroundRepeat = "no-repeat";
+				document.getElementById("logo").style.height = "230px";
+
+				document.getElementById("painel-buttons").innerHTML = "<button onclick='mesa.startgame()'>Iniciar o jogo</button>";	
+
+			},
+
+			startgame: _=>{
+				mesa.gameStart = true;
+
+
+				mesa.drawGame();
+			},
+
+			drawData: function(){
+				let divPaineldata = document.getElementById("painel-data");
+				divPaineldata.innerHTML = `PLAYER ${this.player1.c}: HP>${this.player1.hp},MT>${this.player1.mt}, HIT>${this.player1.hit}, CRT>${this.player1.crt}<p>`;
+				divPaineldata.innerHTML += `PLAYER ${this.player2.c}: HP>${this.player2.hp},MT>${this.player2.mt}, HIT>${this.player2.hit}, CRT>${this.player2.crt}<p>`;
+				this.player2.hp;
+			},
+
+			dodge: async function(p, pos, trigger){
+
+				const missAudio = new Audio("msc/Attack Miss 2.wav");
+
+				return new Promise(resolve=>{
+					setTimeout(_=>{
+						resolve(
+							{ p, pos, trigger, missAudio}
+							);
+					}, trigger);
+				});
+
+			},
+
+			hit: async function(p_damaged, p_atks, trigger){
+
+				const hitAudio = new Audio("msc/Attack Hit 1.wav");
+
+				return new Promise(resolve=>{
+					setTimeout(_=>{
+						resolve(
+							{ p_damaged, p_atks, trigger, hitAudio}
+							);
+					}, trigger);
+				});
+
+			},
+
+			battleCalc: function (p_damaged, p_atks){
+
+				const random100 = Math.ceil((Math.random()*100));
+
+				// se escapar do campo de hit, esquivar
+				if (random100 > mesa["player"+p_damaged].hit) { 
+
+					// ESQUIVA
+					// document.getElementById("image1").style.backgroundPosition = `100px 0px`;
+					// anima o dodge asyncrono, args = posição do dodge, tempo de ativação
+					this.dodge(p_damaged, 100, 500).then(res=>{
+						document.getElementById("image"+res.p).style.backgroundPosition = `${res.pos}px 0px`;
+						res.missAudio.play();
+						console.log('dodge ativado', res.p, res.pos)
+
+						setTimeout(_=>{
+							document.getElementById("image"+res.p).style.backgroundPosition = `1100px 0px`;
+						}, res.trigger);
+					});
+					console.log("ESQUIVA do player", p_damaged, "result", random100);
+
+				} else {
+
+					let luckMultiplier = 1;
+					// se entrar no campo de sorte. aumenta o atk
+					if (random100 <= this["player"+p_atks].luck ) luckMultiplier = 2 ;
+
+					// mesa["player"+p_damaged].hp -= mesa["player"+p_atks].mt;
+					this.hit(p_damaged, p_atks, 500).then(res=>{
+
+						res.hitAudio.play();
+						this["player"+p_damaged].hp -= this["player"+p_atks].mt * luckMultiplier;
+						this.drawGame();
+						console.log("hitaddo");
+					})
+					console.log("DANO do player", p_atks, "result", random100);
+
+				}
+
+
+				// o moveimage, basicamente seria uma chamada de ataque, pois a funct atk o chama
+				// emtão vamos separar duas funções, uma pra substituir o moveimage, e outra pra fazer o movimento critico
+
+
+			},
+
+			atk: function(p){
+				
+
+				if (this.battleLock) return console.log("espere a batalha acabar");
+
+				
+				if (p === 1) {
+					// damaged / by player 
+					this.battleCalc(2, 1);
+				}
+
+				if (p === 2) {
+					// damaged / by player 
+					this.battleCalc(1, 2);
+				}
+
+				// this.drawGame(); // atualizava o dano
+
+				this.moveImage(p);
+
+				// animateScript(p);
+
+				this.battleLock = true;
+
+				setTimeout(_=>{this.battleLock = false}, 3000);
+
+				
+			},
+
+			playSound: async function(){
+				
+				return new Promise(resolve=>{
+					setTimeout(_=>{
+						const audio = new Audio("msc/Attack Hit 1.wav");
+						resolve(audio.play());
+
+						//atualiza o dano
+						this.drawGame();
+
+					}, 600);
+				});
+
+			},
+
+			moveImage: function(p){
+
+				ite = 40;
+				lockSong = false;
+
+				var    position = 100; //start position for the image slicer
+				const  interval = 100; //100 ms of interval for the setInterval()
+
+				// this.playSound().then(console.log("som retonrado"));
+
+				tID = setInterval ( () => {
+
+					let playerImage = document.getElementById("image"+p);
+
+					playerImage.style.backgroundPosition = `-${position}px 0px`; 
+
+					if (position > 300) {
+						ite+= 3;
+
+						playerImage.style.zIndex = 1;
+						playerImage.style.position = "relative";
+						
+						if (p === 1) {
+							playerImage.style.left = (ite+"px");
+						} else {
+							playerImage.style.right = (ite+"px");
+						}
+
+						
+
+						// console.log("intervalo", ite);
+					}
+
+					if (position < 900)
+					{ position = position + 100;}
+					//we increment the position by 256 each time
+					else
+					{ 	
+
+  						setTimeout(_=>{
+  							
+							playerImage.style.opacity = "0";
+							// playerImage.style.webkitTransition = "opacity 0.5s ease-in-out";
+	  						playerImage.style.transition = "opacity 0.3s ease-in-out";
+
+	  						setTimeout(_=>{
+
+	  							playerImage.style.zIndex = 0;
+								playerImage.style.position = "relative";
+
+	  							playerImage.style.backgroundPosition = `1100px 0px`; 
+	  							p = p === 1 ? playerImage.style.left = "40px" : playerImage.style.right = "40px";
+	  							playerImage.style.opacity = "1";
+	  							playerImage.style.animationName = "fadeInOpacity";
+	  							playerImage.style.animationIterationCount = 1;
+	  							playerImage.style.animationTimingFunction = "ease-in";
+	  							playerImage.style.animationDuration = "2s";
+
+
+	  						}, 500);
+
+						}, 100);
+	
+
+						clearInterval(tID);
+
+					 }
+					//reset the position to 256px, once position exceeds 1536px
+					}
+				, interval ); //end of setInterval
+
+			},
+
+			drawButtons: function(){
+
+				let divButtons = document.getElementById("painel-buttons");
+				divButtons.innerHTML = "<button onclick='mesa.atk(1)'>Atacar 2</button>";
+				divButtons.innerHTML += "<button onclick='mesa.atk(2)'>Atacar 1</button>";
+
+			},
+
+			drawChars: _=>{
+
+
+				let img1 = document.getElementById("image1");
+
+				img1.style = "background-color: green; height: 41px; width: 100px; background: url('files/erika.png') 0px 0px; -webkit-transform: scaleX(-1); transform: scaleX(-1); position: relative; left: 40px;"
+
+				let img2 = document.getElementById("image2");
+
+				img2.style = "background-color: green; height: 41px; width: 100px; background: url('files/erika.png') 0px 0px; position: relative; right: 40px;"
+
+				/*height: 41px;
+				width: 100px;
+				background: 
+				url('erika.png') 0px 0px;
+				-webkit-transform: scaleX(-1);
+	  			transform: scaleX(-1);
+
+	  			position: relative;
+	    		left: 40px;*/
+			},
+
+			drawGame: function(){
+				// console.log(arguments.callee.name, "init");
+
+				if (!this.gameStart) return this.drawSceneLogo();
+
+				this.drawData();
+				this.drawChars();
+				this.drawButtons();
+
+				// console.log(arguments.callee.name, "end");
+
+
+			}
+
+
+		}
+
 	</script>
 
 	<style type="text/css">
-		.container .square{
-			border: solid red 1px;
-			text-align: -webkit-center;
-			padding: 20px;
+		#image1 {
+		  /*height: 41px;
+		  width: 100px;
+			background: 
+			url('erika.png') 0px 0px;
+			-webkit-transform: scaleX(-1);
+  			transform: scaleX(-1);
+
+  			position: relative;
+    		left: 40px;*/
 		}
 
-		.foto{
-			margin: 10px;
+		#image2 {
+		  /*height: 41px;
+		  width: 100px;
+			background: 
+			url('erika.png') 0px 0px;
+
+			position: relative;
+    		right: 40px;*/
 		}
 
-		.user-card{
-			border: solid green 1px;
-			border-radius: 10px;
-			text-align: -webkit-center;
-			width: 80%;
-
+		#image1, #image2{
+			display: inline-block;
 		}
 
-		.foto{
-			width: 60%;
-			height: 80px;
-			border: solid blue 2px;
-			border-radius: 10px;
+		#demo {
+			    text-align: center;
+			    text-align: -web-kit-center;
 		}
-
-
-		#lifebar-hp {
-			width: 90%;
-			height: 30px;
-			display: block;
-			background-color: red;
-			border-radius: 100px;
-		}
-
 	</style>
 
 </head>
 <body>
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12 square">
-				<button onclick="addCard()">Adc Jogador</button>
-				<button onclick="addRowCards(lock)">Adc cards</button>
-				<button onclick="dano()">Causar Dano</button>
-			</div>
-		</div>
-
-		<div class="row" id="second-row">
-			<div class="col-md-4 square">
-				<div class="user-card">
-
-					<h4>Nome</h4>
-					<div class="foto" align="">
-						foto
-						a
-					</div>
-
-					<div class="status">
-
-						<div id="lifebar" class="row">
-							<div id="lifebar-field" class="col-md-12">
-								<span id="lifebar-hp">HP</span>
-							</div>
-						</div>
-
-						<div class="row">
-							<div class="col-md-6">
-								PWR: 100
-							</div>
-							<div class="col-md-6">
-								SRT: 100
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-6">
-								ATK: 100
-							</div>
-							<div class="col-md-6">
-								DEF: 100
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-6">
-								SPD: 100
-							</div>
-							<div class="col-md-6">
-								CLASS: KNIGHT
-							</div>
-						</div>
-						
-						
-						
-						
-						<div id="skills" class="row">
-							<div id="skills-field" class="col-md-12">
-								<strong>- SKILLS -</strong><p>
-								Fogo<br>
-								Gelo<br>
-								Cura<br>
-								Escudo Mágico<br>
-							</div>
-						</div>
-
-						<div id="mochila" class="row">
-							<div id="mochila-field" class="col-md-12">
-								<strong>- ITENS -</strong><p>
-								Poção Vida<br>
-								Poção Mana<br>
-								Espada Quebrada<br>
-								800 Golds<br>
-							</div>
-						</div>
-
-
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4 square">
-				<div class="user-card">
-					status
-				</div>
-			</div>
-			<div class="col-md-4 square">
-				<div class="user-card">
-					status
-				</div>
-			</div>
+	<div id="demo">
+		<div id="logo"></div>
+		
+		<div id="corpo" style="zoom: 2.5">
+			<div id="painel-data"></div>
+			<div id="painel-buttons"></div>
+			<div id="status1" >  </div>
+			<div id="image1" >  </div>
+			<div id="image2" >  </div>
+			<div id="status2" >  </div>
 		</div>
 
 	</div>
-
-	<script type="text/javascript">
-		var addCard = ()=>{
-			console.log('clikcado');
-
-			var second_row = document.getElementsByClassName('row')[1];
-
-			var texto = document.createTextNode('ola');
-
-			var spam = document.createElement('spam');
-
-			spam.appendChild(texto);
-			second_row.appendChild(spam);
-
-
-		}
-
-		var lock = 0;
-		var addRowCards = (e)=>{
-			console.log('clikcado');
-
-			if (this.lock >= 3) return console.log('não pode mais criar');
-
-			var container = document.getElementsByClassName('container')[0];
-			var second_row = document.getElementsByClassName('row')[1].innerHTML;
-
-			var rows = '<div class="row"><div class="col-md-4 square"><div class="user-card"><div class="foto" align="">fotoa</div><div class="status">PWR: 100<br>ATK: 100<br>DEF: 100<br>SRT: 100<br>SPD: 100<br><div id="skills">- SKILLS -<p>Fogo<br>Gelo<br>Cura<br>Escudo<br></div></div></div></div><div class="col-md-4 square"><div class="user-card">status</div></div><div class="col-md-4 square"><div class="user-card">status</div></div</div>';
-
-			this.lock++;
-
-			var id = this.lock;
-			id= id+1;
-
-			container.insertAdjacentHTML('beforeEnd',('<div id="row'+id+'" class="row" >'+second_row+' </div>'));
-
-			
-			console.log(this.lock,e)
-
-
-		}
-
-		var dano = ()=>{
-
-			var hp = document.getElementById('lifebar-hp');
-
-			var wid = hp.offsetWidth;
-
-			console.log('valor:',wid);
-
-			var resultado = wid-20;
-
-			if (resultado <= 0) return hp.innerText = "MORREU" ;
-
-			hp.style.width = resultado+"px";
-
-			console.log(resultado);
-		}
-
-	</script>
 </body>
+
+<script type="text/javascript">
+
+	mesa.drawGame();
+	
+</script>
 </html>
