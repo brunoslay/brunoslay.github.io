@@ -1,0 +1,91 @@
+#back-logo {
+	background-image:  linear-gradient(#7a8a8d 41%, #c6cacf);
+	border-radius: 8px 0 0;
+}
+
+#corpo {
+	display: grid;
+	grid-template-columns: auto auto;
+	grid-template-rows: 100px auto;
+	/*zoom: 2.5;*/
+
+}
+
+#painel-data{
+	background-color: #c6cacf;
+	grid-area: painel-data;
+	grid-column: 1 / 4;
+	grid-row: 1;
+
+	border-radius: 0px 0px 0px 8px;
+
+	white-space: pre-wrap;      /* CSS3 */   
+	white-space: -moz-pre-wrap; /* Firefox */    
+	white-space: -pre-wrap;     /* Opera <7 */   
+	white-space: -o-pre-wrap;   /* Opera 7 */    
+	word-wrap: break-word;      /* IE */
+
+	overflow-x: hidden;
+
+	padding: 2px;
+
+}
+
+button, input {
+	margin: 5px 5px;
+}
+
+#painel-buttons {
+	/*background-color: blue;*/
+	grid-area: painel-buttons;
+	grid-column: 1 / 4;
+	grid-row: 2;
+
+
+}
+
+#players {
+	background-color: #ff8000;
+	grid-area: painel-players;
+	grid-column: 1 / 4; /*// 2*/
+	grid-row: 3;
+
+	width: auto;
+	height: 120px;
+}
+
+#image1, #image2{
+	display: inline-block;
+	/*min-width: 188px;*/
+}
+
+#demo {
+	    text-align: center;
+	    text-align: -web-kit-center;
+}
+
+body {
+	margin: 0;
+}
+
+
+table {
+
+	/*border: solid red 2px;*/
+	border-spacing: 0;
+	/*table-layout: fixed;*/
+
+}
+
+th, td {
+	/*border: solid blue 1px;*/
+	/*width: 192px;*/
+	min-width: 188px;
+	max-width: 188px;
+	/*table-layout: fixed;*/
+
+}
+
+td{
+	height: 130px;
+}

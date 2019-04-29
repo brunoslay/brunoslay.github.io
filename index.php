@@ -1,114 +1,29 @@
+<?php 
+
+include_once "sside.php";
+
+?>
+
 <!DOCTYPE html>
 <html style="background-color: #222120;">
 <head>
 	<title></title>
 
-	<style type="text/css">
+	<link rel="stylesheet" type="text/css" href="css/page.css">
 
-		#back-logo {
-			background-image:  linear-gradient(#7a8a8d 41%, #c6cacf);
-			border-radius: 8px 0 0;
-		}
-		
-		#corpo {
-			display: grid;
-			grid-template-columns: auto auto;
-			grid-template-rows: 100px auto;
-			/*grid-template-areas: "painel-data painel-buttons" "painel-buttons painel-buttons" "footer footer"; */
-		}
-
-		#painel-data{
-			background-color: #c6cacf;
-			grid-area: painel-data;
-			grid-column: 1 / 4;
-			grid-row: 1;
-
-			border-radius: 0px 0px 0px 8px;
-
-			white-space: pre-wrap;      /* CSS3 */   
-			white-space: -moz-pre-wrap; /* Firefox */    
-			white-space: -pre-wrap;     /* Opera <7 */   
-			white-space: -o-pre-wrap;   /* Opera 7 */    
-			word-wrap: break-word;      /* IE */
-
-			overflow-x: hidden;
-
-			padding: 2px;
-
-		}
-
-		button {
-			margin: 3px 5px;
-		}
-
-		#painel-buttons {
-			/*background-color: blue;*/
-			grid-area: painel-buttons;
-			grid-column: 1 / 4;
-			grid-row: 2;
-
-
-		}
-
-		#players {
-			background-color: #7a8a8d;
-			grid-area: painel-players;
-			grid-column: 2;
-			grid-row: 3;
-		}
-
-		#status1 {
-			background-color: #c6cacf;
-			grid-area: status_one;
-			grid-column: 1;
-			grid-row: 3;
-		}
-
-		#status2 {
-			background-color: #c6cacf;
-			grid-area: status_two;
-			grid-column: 3;
-			grid-row: 3;
-		}
-
-
-
-
-		/*.grid-line{
-			border: solid 1px red;
-		}
-
-		ul {
-			list-style: none;
-			display: flex;
-			justify-content: center;
-		}
-
-		li {
-			padding: 10px 10px;
-		}
-
-		
-		main {
-			background-color: green;
-			grid-area: main;
-		}
-
-		footer{
-			background-color: darkgrey;
-			grid-area: footer;
-		}*/
-
-	</style>
+	<script type="text/javascript" src="js/screenRework.js"></script>
 
 	<script type="text/javascript">
+
+		
 		const mesa = {
+
 			player1: {
-				lifes: 3, characters: null,
+				lifes: 3, characters: null, control: 1
 			},
 
 			player2: {
-				lifes: 3, characters: null,
+				lifes: 3, characters: null, control: 2
 			},
 			cpu: {hp: 100, mt: 10, hit: 80, crit: 25, luck: 30, c:"CPU"},
 
@@ -125,9 +40,38 @@
 				// document.getElementById("demo").style.backgroundRepeat = "no-repeat";
 				document.getElementById("logo").style.height = "230px";
 
-				// document.getElementById("logo").style.backgroundColor = "#7a8a8d";
+			},
 
-				document.getElementById("painel-buttons").innerHTML = "<button onclick='mesa.startgame()'>Iniciar o jogo</button>";	
+			drawButtonStart: function (){
+
+				let painel_buttons = document.getElementById("painel-buttons");
+
+				painel_buttons.innerHTML = `<span style="background-color: #a4b6b9">Bem vindo ${this.yourNick}</span><button id="btn-start" onclick='mesa.startgame()'>Iniciar o jogo</button>`;
+
+				let button = document.getElementById("btn-start");
+
+				button.style = "background-color: #00ff4e; border: 3px double #04a034";
+
+			},
+
+			drawButtonNick: function(){
+
+				let painel_buttons = document.getElementById("painel-buttons");
+
+				painel_buttons.innerHTML = `<form method="post" action="${window.location.pathname}">`+
+				`<input type="text" name="nick" placeholder="SEU NICK" /><br>`+ 
+				`<input type="submit" value="CONFIRMAR" ></form>`;
+
+				// onclick="mesa.registerNick('Stayson')"
+			},
+
+			yourNick: null,
+
+			registerNick: function(name){
+
+				this.yourNick = name;
+				this.drawButtonStart();
+				// this.yourNick = "<?=$nick?>";
 
 			},
 
@@ -213,17 +157,6 @@
 					this.battleLock = true;
 					setTimeout(_=>{this.battleLock = false}, 3000);
 				}
-
-				// this.drawGame(); // atualizava o dano
-
-				// this.moveImage(p);
-
-				// animateScript(p);
-
-				
-
-				
-
 				
 			},
 
@@ -340,12 +273,25 @@
 					this["player"+p_damaged].characters[char_damaged]["hp"+p_damaged] -= dmg;
 
 					this.audio(conflito);
+					setTimeout(_=>{this.audio(conflito);}, 100);
 					console.log("dano critico de", playerAtk * conflito.result);
 					txt_log = `<br><strong>Player ${p_atks}</strong> causou dano <strong>CRÍTICO</strong> de <strong>${dmg}</strong>`;
 
 				}
 
 				if (conflito.dodge === true) {
+
+					let imgD = document.getElementById("image"+p_damaged);
+
+					let sheet3 = this["player"+p_damaged].characters[char_damaged].sheet3;
+					let { height, width, img, divPos } = sheet3;
+
+					// imgD.style.backgroundPosition = "100px 0";
+
+					imgD.style = "background-color: green; height: "+height+"px; width: "+width+"px; background: url('"+img+"') 0px 0px; position: absolute; right: "+divPos+"%; bottom: 11%; "
+
+
+
 
 					this["player"+p_damaged].characters[char_damaged]["hp"+p_damaged] -= playerAtk * 0;
 					this.audio(conflito);
@@ -361,6 +307,12 @@
 				) {
 					this.gameStart = false;
 					txt_log+= `<br>FIM DE JOGO. <span style='color: green'>JOGADOR ${p_atks} VENCEU!!</span>`;
+
+					if (p_atks === 1) {
+						txt_log+= `<br>Parabéns você é FODA!`;
+					} else {
+						txt_log+= `<br>Que vergonha, vence nem um jogo de navegador '-'`;
+					}
 				}
 
 				this.drawData("erika", txt_log);
@@ -369,7 +321,8 @@
 			},
 
 
-			animation: async function(p_atks, char_atks, p_damaged, char_damaged, conflito, fps = 110){
+			noDamageRepeat: false,
+			animation: async function(p_atks, char_atks, p_damaged, char_damaged, conflito, fps = 100){
 
 
 				/*
@@ -385,9 +338,21 @@
 
 
 				let perso = this["player"+p_atks].characters[char_atks];
+				let control_side = this["player"+p_atks].control;
+
+				var { width, height, i_final, del_frames, adj_line } = perso.sheet1;
+				var { colision, divPos } = perso.sheet1;
+				var { position: css_pos, css_left: left, css_right: right  } = perso.sheet1;
 
 
-				let     position = 100; //start position for the image slicer
+				let     positionW = width	; //start position for the image slicer
+				let     positionH = 0	; //start position for the image slicer
+				let 	timeLine  = 0	; // start index of timeLine
+				let 	index_final = i_final; //  final index of timeLine
+				let 	deletedFrames = del_frames; // the last empty slots of timeLine
+				let 	lastTimeL = positionW * deletedFrames; // possible adjust empty slots
+				let 	adjust_inline = adj_line;
+				
 				const   interval = fps; //100 ms of interval for the setInterval()
 
 				let frameSize 	= 	perso.sheet1.size;
@@ -399,19 +364,38 @@
 				let fadeIn 		=	perso.fades.in;
 
 				if (conflito.result === 2) {
+
+					var { width, height, i_final, del_frames, adj_line } = perso.sheet2;
+					var { colision, divPos } = perso.sheet2;
+
+					positionW = width	;
+					index_final = i_final
+					deletedFrames = del_frames;
+					lastTimeL = positionW * deletedFrames;
+					adjust_inline = adj_line;
+
 					frameSize 	= 	perso.sheet2.size;
 					frameAdv 	= 	perso.sheet2.adv;
 					frameStand 	= 	perso.sheet2.stand;
 					frameColision =	perso.sheet2.colision;
 
 
+					console.log("W =", width)
+
 					let imgChar = this["player"+p_atks].characters[char_atks].sheet2.img;
 
-					document.getElementById("image"+p_atks).style.background = `url("${imgChar}") 0px 0px`
+					// document.getElementById("image"+p_atks).style.background = `url("${imgChar}") 0px 0px`
+					this.drawBattle("erika", p_atks, 2, control_side);
+
+					// this.drawChars("erika", 2);
 				}
 
 
 				// roda os frames de 100 em 100
+				//
+				//
+				//
+				//
 				tID = setInterval ( () => {
 
 					let playerImage = document.getElementById("image"+p_atks);
@@ -419,16 +403,16 @@
 					// console.log(position);
 
 					// seta a imagem a cada milisegundo do setInterval
-					playerImage.style.backgroundPosition = `-${position}px 0px`; 
+					playerImage.style.backgroundPosition = `-${positionW}px -${positionH}px`; 
 
 					let 	ite = 40;
 
 					// a partir do quadro 400, move a imagem
-					if (position > frameAdv) {
+					if (false/*position > frameAdv*/) {
 
 						// seta o index pra sobrepor o inimigo ao atacar
 						playerImage.style.zIndex = 1;
-						playerImage.style.position = "relative";
+						playerImage.style.position = css_pos;
 
 						ite+= 3;
 						// move a imagem mais adiante para encostar no inimigo
@@ -440,9 +424,13 @@
 					} // end if position
 
 
-					if (position > frameColision && position < frameColision + 200) {
+					if (timeLine === colision &&  !(this.noDamageRepeat)) {
 
+						// seta o index pra sobrepor o inimigo ao atacar
+						playerImage.style.zIndex = 1;
+						playerImage.style.position = css_pos;
 
+						this.noDamageRepeat = true;
 						// causa o dano e chama o som
 						this.damage(p_damaged, char_damaged, p_atks, char_atks, conflito);
 
@@ -450,64 +438,99 @@
 					}
 
 					// se a posição for menor que 900, move 1 frame
-					if (position < frameSize) { 
-						position = position + 100;
+					if (positionW < frameSize) { 
+						console.log(positionW = positionW + width, width)
 					}
 					// se ultrapassar o limite, termina com estes sets de fades e etc
-					else { 	
+					else { 
 
-  						setTimeout(_=>{
-  							
-  							// animação de fade out
+						timeLine++;
+
+
+
+						positionH = positionH + height;
+						positionW = width;
+
+						console.log("back frame", timeLine);
+						if (timeLine > adjust_inline) frameSize -= lastTimeL;
+						if (!(timeLine > index_final)) return null;
+						// console.log("animation end", timeLine);
+						
+						
+
+						clearInterval(tID)
+						//if (timeLine <= 0) 
+
+							/*setTimeout(_=>{
+								
+								// animação de fade out
 							playerImage.style.opacity = "0";
 							playerImage.style.webkitTransition = "opacity 0.3s ease-in-out";
-	  						playerImage.style.transition = "opacity 0.3s ease-in-out";
+								playerImage.style.transition = "opacity 0.3s ease-in-out";
 
-						}, fadeOut);
+						}, fadeOut);*/
+
+						// return null;
 
 						setTimeout(_=>{
 
-  							// a imagem volta ao index 0
-  							playerImage.style.zIndex = 0;
-							playerImage.style.position = "relative";
+								// a imagem volta ao index 0
+								playerImage.style.zIndex = 0;
+							playerImage.style.position = css_pos;
 
 							// devolve a posição inicial do frame
-  							playerImage.style.backgroundPosition = `${frameStand}px 0px`;
+								playerImage.style.backgroundPosition = `-${positionW}px 0px`;
 
-  							// testa o player, e seta left ou  right pro respectivo player
-  							p_atks = p_atks === 1 ? playerImage.style.left = "40px" : playerImage.style.right = "40px";
+								// testa o player, e seta left ou  right pro respectivo player
 
-  							// animação de fade in
-  							playerImage.style.opacity = "1";
-  							playerImage.style.animationName = "fadeInOpacity";
-  							playerImage.style.animationIterationCount = 1;
-  							playerImage.style.animationTimingFunction = "ease-in";
-  							playerImage.style.animationDuration = "2s";
+								// mudei aqui depois volta
+								// p_atks = p_atks === 1 ? playerImage.style.left = "60px" : playerImage.style.right = "60px";
 
-
-  							this.turn++;
-
-  							this.time = this.turn%2;
-
-  							console.log("TURNO:", this.turn, "Vez de", this.time);
-
-  							if (this.time === 0) {
-  								setTimeout(_=>{
-
-  									this.atk(2);
-
-  								}, 2000);
-  							}
+								// animação de fade in
+								// playerImage.style.opacity = "1";
+								// playerImage.style.animationName = "fadeInOpacity";
+								// playerImage.style.animationIterationCount = 1;
+								// playerImage.style.animationTimingFunction = "ease-in";
+								// playerImage.style.animationDuration = "2s";
 
 
+								////// FINAL DA ANIMAÇÃO E DEMAIS EVENTOS
+								this.turn++;
+								this.noDamageRepeat = false;
 
-  							this.drawChars();
+								//
+								//	turno 1 soma +1 = 2, e divide por 2, se resultado for
+								//	zero, é a vez do inimigo, se for 1, é do player
+								//
+								this.time = this.turn%2;
+
+								console.log("TURNO:", this.turn, "Vez de", this.time);
+
+								if (this.time === 0) {
+
+									this.drawButtons(true);
+
+									setTimeout(_=>{
+
+										this.atk(2);
+
+									}, 2000);
+								} else {
+									this.drawButtons(false);
+								}
 
 
-  						}, fadeIn);
-	
 
-						clearInterval(tID); // para o loop
+
+								this.drawChars("erika", 1);
+
+
+							}, (fadeIn - fadeIn) );
+
+
+						// para o loop
+						
+						//clearInterval(tID);
 
 					 } // end if posision
 				}, interval ); //end of setInterval
@@ -517,7 +540,7 @@
 
 			drawSideDatas: function(char_name){
 
-				console.log("draaaaaaaaaaaaaa");
+				// console.log("draaaaaaaaaaaaaa");
 
 				let displayHP = document.getElementById("display-hp1");
 				let displayMT = document.getElementById("display-mt1");
@@ -568,131 +591,132 @@
 				divPaineldata.innerHTML += `PLAYER 2: ${char_name} HP>${this.player2.characters[char_name].hp2},MT>${this.player2.characters[char_name].mt2}, HIT>${this.player2.characters[char_name].hit2}, CRT>${this.player2.characters[char_name].crit2}<p>`;
 			},
 
-			drawButtons: function(){
+			drawButtons: function(p_atks = false){
 
 				let divButtons = document.getElementById("painel-buttons");
-				divButtons.innerHTML = "<button onclick='mesa.atk(1)'>Atacar inimigo</button>";
+
+				if (p_atks) {
+					divButtons.innerHTML = 	"<button id='btn-atk' >Vez do Inimigo. Aguarde...</button>";
+
+					let button = document.getElementById("btn-atk");
+					button.style = "background-color: rgb(247, 89, 89); border: 3px double rgb(255, 38, 38);";
+				}
+				else{
+					
+					divButtons.innerHTML = "<button id='btn-atk' onclick='mesa.atk(1)'>Atacar inimigo</button>";
+
+					let button = document.getElementById("btn-atk");
+					button.style = "background-color: #00ff4e; border: 3px double #04a034";
+				}
 				// divButtons.innerHTML += "<button onclick='mesa.atk(2)'>Atacar 1</button>";
 
 			},
 
-			drawCharsCrit: function(p_atks){
+			drawBattle: function(char_name, p_atks, conflito, control_side){
 
-				let img = document.getElementById("image"+p_atks);
+				let sheetAtk;
+				if (conflito === 1)
+				sheetAtk = 1;
+				if (conflito === 2)
+				sheetAtk = 2;
 
-				if (p_atks === 1) 
-				img.style = "background-color: green; height: 50px; width: 100px; background: url('files/erikaCriti.png') 0px 0px; -webkit-transform: scaleX(-1); transform: scaleX(-1); position: relative; left: 40px;";
 
-				if (p_atks === 2) 
-				img.style = "background-color: green; height: 50px; width: 100px; background: url('files/erikaCriti.png') 0px 0px; position: relative; right: 40px;";
+				// estilo do elemento atacante
+				let element_atk = document.getElementById("image"+p_atks);
+
+				// objeto sheet do atacante
+				let playerAtk =  this["player"+p_atks]
+				.characters[char_name]["sheet"+sheetAtk];
+
+				console.log(playerAtk)
+
+				// dados do obj
+				var { height, width, img, divPos } = playerAtk;
+				var { position, left, right, top, bottom } = playerAtk;
+
+
+				if (control_side === 1) {
+					element_atk.style = "background-color: green; height: "+height+"px; width: "+width+"px; background: url('"+img+"') 0px 0px; -webkit-transform: scaleX(-1); transform: scaleX(-1); position: "+position+";  right: "+right+"; left: "+left+"; top:"+top+"; bottom"+bottom+";"
+				}
+
+				if (control_side === 2) {
+
+					let adjust = Number(left.substr(0,2));
+
+					left = (adjust + 17)+"px";
+
+
+					element_atk.style = "background-color: green; height: "+height+"px; width: "+width+"px; background: url('"+img+"') 0px 0px; position: "+position+";  right: "+left+"; left: "+right+"; top:"+top+"; bottom"+bottom+";"
+				}
+
+				return null;
+
+				let element_dmg = document.getElementById("image"+p_damaged);
 			},
 
-			drawChars: function(){
-
+			drawChars: function(char_name, sheetNumber /*p_atks, p_damaged, conflito_result*/){
 
 				let img1 = document.getElementById("image1");
+				var style1 = this.player1.characters[char_name]["sheet"+sheetNumber];
+				var { height, width, img, divPos } = style1;
+				var { position, left, right, top, bottom } = style1;
 
-				img1.style = "background-color: green; height: 50px; width: 100px; background: url('files/erika.png') 0px 0px; -webkit-transform: scaleX(-1); transform: scaleX(-1); position: relative; left: 40px;"
+				console.log("top", top);
+
+				img1.style = "background-color: green; height: "+height+"px; width: "+width+"px; background: url('"+img+"') 0px 0px; -webkit-transform: scaleX(-1); transform: scaleX(-1); position: "+position+";  right: "+right+"; left: "+left+"; top:"+top+"; bottom"+bottom+";"
+
+				// img1.style += "";
+
+				// return null;
 
 				let img2 = document.getElementById("image2");
+				var style2 = this.player2.characters[char_name]["sheet"+sheetNumber];
+				var { height, width, img, divPos } = style2;
+				var { position, left, right, top, bottom } = style2;
 
-				img2.style = "background-color: green; height: 50px; width: 100px; background: url('files/erika.png') 0px 0px; position: relative; right: 40px;"
+				img2.style = "background-color: green; height: "+height+"px; width: "+width+"px; background: url('"+img+"') 0px 0px; position: "+position+";  right: "+left+"; left: "+right+"; top:"+top+"; bottom"+bottom+";"
 
-				/*height: 41px;
-				width: 100px;
-				background: 
-				url('erika.png') 0px 0px;
-				-webkit-transform: scaleX(-1);
-	  			transform: scaleX(-1);
-
-	  			position: relative;
-	    		left: 40px;*/
 			},
 
 			drawGame: function(){
 				// console.log(arguments.callee.name, "init");
 
-				if (!this.gameStart) return this.drawSceneLogo();
+				this.yourNick = "<?=$nick?>";
 
-				console.log(chars.erika);
+				this.drawSceneLogo();
+
+				// console.log("antes your nick", typeof this.yourNick);
+				if (this.yourNick === "no-nick") return this.drawButtonNick();
+				// console.log("depois your nick", this.yourNick);
+
+
+				// desenha a logo e o botão iniciar
+				if (!this.gameStart) return this.drawButtonStart();
+
+				// console.log(chars.erika);
 
 				this.player1.characters = chars;
 				this.player2.characters = chars;
 
 				this.drawData("erika", "Inicio de jogo");
-				this.drawChars();
+
+
+				this.drawChars("erika", 1);
 				this.drawButtons();
 
 				// console.log(arguments.callee.name, "end");
 
-
-			}
-
-
-		}
-
-
-		const chars = {
-			erika: {
-				sheet1: {
-					img: "files/erika.png",
-					stand: 1100,
-					adv: 300,
-					size: 900, // deixar o size sempre 100 a menos do total
-					colision: 400
-				},
-
-				sheet2: {
-					img: "files/erikaCriti.png",
-					stand: 1600,
-					adv: 700,
-					size: 1500, // deixar o size sempre 100 a menos do total
-					colision: 1000
-				},
-
-				fades: {
-					in: 500,
-					out: 100
-				},
-
-				hp1: 100, mt1: 10, hit1: 80, crit1: 25,
-				hp2: 100, mt2: 10, hit2: 80, crit2: 25
 			}
 		}
-
 	</script>
 
+	<script type="text/javascript" src="chars.js"></script>
+
+
+
 	<style type="text/css">
-		#image1 {
-		  /*height: 41px;
-		  width: 100px;
-			background: 
-			url('erika.png') 0px 0px;
-			-webkit-transform: scaleX(-1);
-  			transform: scaleX(-1);
 
-  			position: relative;
-    		left: 40px;*/
-		}
-
-		#image2 {
-		  /*height: 41px;
-		  width: 100px;
-			background: 
-			url('erika.png') 0px 0px;
-
-			position: relative;
-    		right: 40px;*/
-		}
-
-		#image1, #image2{
-			display: inline-block;
-		}
-
-		#demo {
-			    text-align: center;
-			    text-align: -web-kit-center;
-		}
+		
 	</style>
 
 </head>
@@ -702,7 +726,7 @@
 			<div id="logo"></div>
 		</div>
 		
-		<div id="corpo" style="zoom: 2.5">
+		<div id="corpo">
 
 			<div id="painel-data" style="overflow-y:scroll;"></div>
 
@@ -717,9 +741,55 @@
 
 			</div>
 
-			<div id="players">
-				<div id="image1" >  </div>
-				<div id="image2" >  </div>
+			<div id="players" class="ruler">
+
+				 <table>
+					
+					<tr>
+						<th>0</th>
+						<th>1</th>
+						<th>2</th>
+						<th>3</th>
+
+						<th>4</th>
+						<th>5</th>
+						<th>6</th>
+
+						<th>7</th>
+						<th>8</th>
+						<th>9</th>
+					</tr>
+
+
+					<tr>
+
+						<td>data 0</td>
+						<td>data 1</td>
+						<td>data 2</td>
+						<td>data 3</td>
+
+						<td>
+							<div id="image1" >  </div>
+						</td>
+
+						<td>
+							<div id="image2" >  </div>
+						</td>
+
+						<td>data 6</td>
+						<td>data 7</td>
+						<td>data 8</td>
+						<td>data 9</td>
+
+
+
+					</tr>
+
+				</table> 
+	
+				
+
+				
 			</div>
 
 			<div id="status2" > 
@@ -737,7 +807,9 @@
 
 <script type="text/javascript">
 
-	mesa.drawGame();
+	window.onload = mesa.drawGame();
+
+	window.onload = screen.getSize();
 	
 </script>
 </html>
