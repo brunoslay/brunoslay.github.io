@@ -293,8 +293,8 @@ const chars = {
 			out: 100
 		},
 
-		hp1: 50, total1: 50, mt1: 7, hit1: 90, crit1: 60,
-		hp2: 50, total2: 50, mt2: 7, hit2: 90, crit2: 60
+		hp1: 60, total1: 60, mt1: 7, hit1: 90, crit1: 60,
+		hp2: 60, total2: 60, mt2: 7, hit2: 90, crit2: 60
 	},
 
 	oswin: {
@@ -517,8 +517,8 @@ const chars = {
 			out: 100
 		},
 
-		hp1: 60, total1: 60, mt1: 10, hit1: 50, crit1: 70,
-		hp2: 60, total2: 60, mt2: 10, hit2: 50, crit2: 70
+		hp1: 60, total1: 60, mt1: 10, hit1: 60, crit1: 60,
+		hp2: 60, total2: 60, mt2: 10, hit2: 60, crit2: 60
 	},
 
 
