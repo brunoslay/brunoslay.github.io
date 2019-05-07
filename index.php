@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -439,7 +441,7 @@
 
 				this.yourNick = name;
 				this.drawButtonStart();
-				// this.yourNick = "<?=$nick?>";
+				
 
 			},
 
@@ -1593,7 +1595,7 @@
 			drawGame: function(){
 				// console.log(arguments.callee.name, "init");
 
-				this.yourNick = "<?=$nick?>";//<?=$nick?>
+				this.yourNick = "true";
 
 				// alert(Object.getOwnPropertyNames(team.player).length);
 
@@ -1601,7 +1603,7 @@
 				this.drawSceneLogo();
 
 				// console.log("antes your nick", typeof this.yourNick);
-				if (this.yourNick === "no-nick") return this.drawButtonNick();
+				if (this.yourNick === "yes-nick") return this.drawButtonNick();
 				
 				if (Object.getOwnPropertyNames(team.player).length < 2) return this.drawCharSelection();
 
