@@ -3,7 +3,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>JS + CSS = GAME</title>
+
+	<meta charset="utf-8">
+
+	<link rel="icon" href="files/icon.png" type="image/x-icon">
 
 	<link rel="stylesheet" type="text/css" href="css/page.css">
 
@@ -88,6 +92,7 @@
 					mesa["player2"].lifes -= 1;
 				}
 
+
 				if (this.stage === 2){
 
 					this.opp.joshua = chars.joshua;
@@ -111,9 +116,20 @@
 					this.opp.bartre = chars.bartre;
 				}
 
-				if (this.stage >= 5){
+				if (this.stage === 5){
 
-					return drawData("PARABENS VC MATOU TODO MUNDO");
+					this.opp.void = chars.void;
+					this.opp.empty1 = chars.empty1;
+					this.opp.empty2 = chars.empty2;
+
+					mesa["player2"].lifes -= 2;
+
+					/*return drawData("PARABENS VC MATOU TODO MUNDO");*/
+				}
+
+				if (this.stage >= 6){
+
+					return null;
 				}
 
 
@@ -237,9 +253,9 @@
 					if (timer === 2) color1 = "black", color2 = "purple", color3 = "black";
 					if (timer === 3) color1 = "black", color2 = "black", color3 = "purple";
 
-					e[0].style.boxShadow = `${color1} 0 0 10px 3px`;
-					e[1].style.boxShadow = `${color2} 0 0 10px 3px`;
-					e[2].style.boxShadow = `${color3} 0 0 10px 3px`;
+					e[1].style.boxShadow = `${color1} 0 0 10px 3px`;
+					e[3].style.boxShadow = `${color2} 0 0 10px 3px`;
+					e[5].style.boxShadow = `${color3} 0 0 10px 3px`;
 
 					timer++;
 
@@ -377,7 +393,20 @@
 				bgmWin.volume = 0.04;
 				bgmWin.loop = true;
 
+			},
+
+			final: function (){
+
+				const bgmEnd = new Audio("files/bgm/end.mp3");
+
+				this.playingNow = bgmEnd;
+
+				bgmEnd.play();
+				bgmEnd.volume = 0.04;
+				bgmEnd.loop = true;
+
 			}
+
 
 			
 		}
@@ -402,6 +431,63 @@
 			fight: { atk: null, dmg: null, by: null }, // { atk: "erika", dmg: "berserker", by: "player1" }
 
 			atkCount: 0,
+
+			final: function (){
+
+				loadHTML("load/final.html", "players").then(e=>
+				{
+
+
+					let ch = this.player1.characters;
+					let values = Object.values(ch);
+
+					let { name: namev0 } = values[0];
+					let { name: namev1 } = values[1];
+					let { name: namev2 } = values[2];
+
+
+					let ob = Object.getOwnPropertyNames(ch);
+
+					let t1 = document.getElementsByClassName("my-team1")[0];
+					let t1_status = document.getElementsByClassName("status-team1")[0];
+					let t1_name = document.getElementById("team-name1");
+
+					let t2 = document.getElementsByClassName("my-team2")[0];
+					let t2_status = document.getElementsByClassName("status-team2")[0];
+					let t2_name = document.getElementById("team-name2");
+
+
+					let t3 = document.getElementsByClassName("my-team3")[0];
+					let t3_status = document.getElementsByClassName("status-team3")[0];
+					let t3_name = document.getElementById("team-name3");
+
+
+
+					// return console.log(t1);
+
+					t1.setAttribute("class", "avatar my-team1 "+ob[0]);
+					t1.setAttribute("src", "files/avatar/"+ob[0]+"_mugshot.png");
+
+					t1_name.innerText = namev0;
+
+
+					t2.setAttribute("class", "avatar my-team2 "+ob[1]);
+					t2.setAttribute("src", "files/avatar/"+ob[1]+"_mugshot.png");
+
+					t2_name.innerText = namev1;
+
+
+					t3.setAttribute("class", "avatar my-team3 "+ob[2]);
+					t3.setAttribute("src", "files/avatar/"+ob[2]+"_mugshot.png");
+
+					t3_name.innerText = namev2;
+
+					soundBox.playingNow.pause();
+					soundBox.final();
+
+				});
+
+			},
 
 			drawSceneLogo: _=>{
 
@@ -719,9 +805,21 @@
 							
 						}
 
+
+
 						if (this.player1.lifes > 0) {
 
 							team.stage++;
+
+							if (team.stage > 5) {
+
+								txt_log+= `<br><span style='color: #a12fe6'><strong>VOCÊ DERROTOU TODOS INIMIGOS. PARABÉNS!!!</strong></span>`;
+
+								
+
+								return this.drawData(txt_log);
+
+							}
 
 							txt_log+= `<br><span style='color: #a12fe6'><strong>Fase ${team.stage} vai iniciar em alguns segundos. Aguarde...</strong></span>`;
 
@@ -858,7 +956,7 @@
 						}
 					} // end if position
 					timerSwordsman++;
-					if (timeLine >= colision && char_atks === "lyn" && conflito.result === 2 && timerSwordsman > 2 && positionH < 1100) {
+					if (timeLine >= colision && char_atks === "lyn" && conflito.result === 2 && timerSwordsman > 2 && positionH < 800) {
 
 						// if (positionW < 1600) return null;
 
@@ -1360,6 +1458,11 @@
 
 				this.player1.lifes = 3;
 				this.player2.lifes = 3;
+				
+				if (Object.keys(this.player2.characters)[0] === "void") {
+
+					this.player2.lifes = 1;
+				}
 
 				this.gameStart = true;
 				this.atkCount = 0;
@@ -1385,6 +1488,13 @@
 
 				this.gameStart = true;
 
+
+				if (team.stage > 5){
+
+					this.final();
+					return console.log("~~ Y O U •• W I N ~~");
+
+				};
 
 				if (this.player2.lifes <= 0){
 
@@ -1420,21 +1530,26 @@
 					let ch = this.player1.characters;
 					let values = Object.values(ch);
 
-					let { hp1: hpv0, mt1: mtv0, hit1: hitv0, crit1: critv0 } = values[0];
-					let { hp1: hpv1, mt1: mtv1, hit1: hitv1, crit1: critv1 } = values[1];
-					let { hp1: hpv2, mt1: mtv2, hit1: hitv2, crit1: critv2 } = values[2];
+					let { hp1: hpv0, mt1: mtv0, hit1: hitv0, crit1: critv0, name: namev0 } = values[0];
+					let { hp1: hpv1, mt1: mtv1, hit1: hitv1, crit1: critv1, name: namev1 } = values[1];
+					let { hp1: hpv2, mt1: mtv2, hit1: hitv2, crit1: critv2, name: namev2 } = values[2];
 
 
 					let ob = Object.getOwnPropertyNames(ch);
 
 					let t1 = document.getElementsByClassName("my-team1")[0];
 					let t1_status = document.getElementsByClassName("status-team1")[0];
+					let t1_name = document.getElementById("team-name1");
 
 					let t2 = document.getElementsByClassName("my-team2")[0];
 					let t2_status = document.getElementsByClassName("status-team2")[0];
+					let t2_name = document.getElementById("team-name2");
+
 
 					let t3 = document.getElementsByClassName("my-team3")[0];
 					let t3_status = document.getElementsByClassName("status-team3")[0];
+					let t3_name = document.getElementById("team-name3");
+
 
 
 					// return console.log(t1);
@@ -1442,30 +1557,36 @@
 					t1.setAttribute("class", "avatar my-team1 "+ob[0]);
 					t1.setAttribute("src", "files/avatar/"+ob[0]+"_mugshot.png");
 
-					t1_status.innerHTML = "HP "+hpv0+
-					"<br>MT "+mtv0+
-					"<br>HIT "+hitv0+
-					"<br>CRT "+critv0;
+					t1_name.innerText = namev0;
+
+					t1_status.innerHTML = "<span class='popup-status' title='Pontos de Vida'>HP "+hpv0+"</span>"+
+					"<br><span class='popup-status' title='Pontos de Ataque'>MT "+mtv0+"</span>"+
+					"<br><span class='popup-status' title='Chance de Acerto'>HIT "+hitv0+"</span>"+
+					"<br><span class='popup-status' title='Chance de crítico, dobra seu ataque'>CRT "+critv0;
 
 					if (hpv0 <= 0) t1.style.filter = "grayscale(100%)";
 
 					t2.setAttribute("class", "avatar my-team2 "+ob[1]);
 					t2.setAttribute("src", "files/avatar/"+ob[1]+"_mugshot.png");
 
-					t2_status.innerHTML = "HP "+hpv1+
-					"<br>MT "+mtv1+
-					"<br>HIT "+hitv1+
-					"<br>CRT "+critv1;
+					t2_name.innerText = namev1;
+
+					t2_status.innerHTML = "<span class='popup-status' title='Pontos de Vida'>HP "+hpv1+"</span>"+
+					"<br><span class='popup-status' title='Pontos de Ataque'>MT "+mtv1+"</span>"+
+					"<br><span class='popup-status' title='Chance de Acerto'>HIT "+hitv1+"</span>"+
+					"<br><span class='popup-status' title='Chance de crítico, dobra seu ataque'>CRT "+critv1;
 
 					if (hpv1 <= 0) t2.style.filter = "grayscale(100%)";
 
 					t3.setAttribute("class", "avatar my-team3 "+ob[2]);
 					t3.setAttribute("src", "files/avatar/"+ob[2]+"_mugshot.png");
 
-					t3_status.innerHTML = "HP "+hpv2+
-					"<br>MT "+mtv2+
-					"<br>HIT "+hitv2+
-					"<br>CRT "+critv2;
+					t3_name.innerText = namev2;
+
+					t3_status.innerHTML = "<span class='popup-status' title='Pontos de Vida'>HP "+hpv2+"</span>"+
+					"<br><span class='popup-status' title='Pontos de Ataque'>MT "+mtv2+"</span>"+
+					"<br><span class='popup-status' title='Chance de Acerto'>HIT "+hitv2+"</span>"+
+					"<br><span class='popup-status' title='Chance de crítico, dobra seu ataque'>CRT "+critv2;
 
 					if (hpv2 <= 0) t3.style.filter = "grayscale(100%)";
 
@@ -1476,25 +1597,33 @@
 					let ch2 = this.player2.characters;
 					let values2 = Object.values(ch2);
 
-					let { hp2: ohpv0, mt2: omtv0, hit2: ohitv0, crit2: ocritv0 } = values2[0];
-					let { hp2: ohpv1, mt2: omtv1, hit2: ohitv1, crit2: ocritv1 } = values2[1];
-					let { hp2: ohpv2, mt2: omtv2, hit2: ohitv2, crit2: ocritv2 } = values2[2];
+					let { hp2: ohpv0, mt2: omtv0, hit2: ohitv0, crit2: ocritv0, name: onamev0 } = values2[0];
+					let { hp2: ohpv1, mt2: omtv1, hit2: ohitv1, crit2: ocritv1, name: onamev1 } = values2[1];
+					let { hp2: ohpv2, mt2: omtv2, hit2: ohitv2, crit2: ocritv2, name: onamev2 } = values2[2];
 
 					let ob2 = Object.getOwnPropertyNames(ch2);
 
 					let o1 = document.getElementsByClassName("opponent1")[0];
 					let o1_status = document.getElementsByClassName("status-opp1")[0];
+					let o1_name = document.getElementById("opp-name1");
+
 
 					let o2 = document.getElementsByClassName("opponent2")[0];
 					let o2_status = document.getElementsByClassName("status-opp2")[0];
+					let o2_name = document.getElementById("opp-name2");
+
 
 					let o3 = document.getElementsByClassName("opponent3")[0];
 					let o3_status = document.getElementsByClassName("status-opp3")[0];
+					let o3_name = document.getElementById("opp-name3");
+
 
 
 
 					o1.setAttribute("class", "avatar opponent1 "+ob2[0]);
 					o1.setAttribute("src", "files/avatar/"+ob2[0]+"_mugshot.png");
+
+					o1_name.innerText = onamev0;
 
 					o1_status.innerHTML = "HP "+ohpv0+
 					"<br>MT "+omtv0+
@@ -1506,6 +1635,8 @@
 					o2.setAttribute("class", "avatar opponent2 "+ob2[1]);
 					o2.setAttribute("src", "files/avatar/"+ob2[1]+"_mugshot.png");
 
+					o2_name.innerText = onamev1;
+
 					o2_status.innerHTML = "HP "+ohpv1+
 					"<br>MT "+omtv1+
 					"<br>HIT "+ohitv1+
@@ -1516,6 +1647,8 @@
 
 					o3.setAttribute("class", "avatar opponent3 "+ob2[2]);
 					o3.setAttribute("src", "files/avatar/"+ob2[2]+"_mugshot.png");
+
+					o3_name.innerText = onamev2;
 
 					o3_status.innerHTML = "HP "+ohpv2+
 					"<br>MT "+omtv2+
@@ -1565,7 +1698,7 @@
 			drawArenaBattle: function (){
 
 				if (!(this.fight.atk) || !(this.fight.dmg) || !(this.fight.by)) 
-				return null;
+				return alert("Selecione um aliado, e um inimigo, depois clique em 'Atacar!!'");
 
 				console.log("TURNO...", this.time);
 

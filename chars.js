@@ -54,6 +54,7 @@ const chars = {
 			out: 100
 		},
 
+		name: "Eirika",
 		hp1: 60, total1: 60, mt1: 8, hit1: 80, crit1: 60,
 		hp2: 60, total2: 60, mt2: 8, hit2: 80, crit2: 60
 	},
@@ -110,6 +111,7 @@ const chars = {
 			out: 100
 		},
 
+		name: "Eliwood", 
 		hp1: 70, total1: 70, mt1: 10, hit1: 85, crit1: 25,
 		hp2: 70, total2: 70, mt2: 10, hit2: 85, crit2: 25
 	},
@@ -167,6 +169,7 @@ const chars = {
 			out: 100
 		},
 
+		name: "Hector",
 		hp1: 80, total1: 80, mt1: 11, hit1: 75, crit1: 15,
 		hp2: 80, total2: 80, mt2: 11, hit2: 75, crit2: 15
 	},
@@ -225,6 +228,7 @@ const chars = {
 			out: 100
 		},
 
+		name: "Ephraim",
 		hp1: 65, total1: 65, mt1: 9, hit1: 80, crit1: 35,
 		hp2: 65, total2: 65, mt2: 9, hit2: 80, crit2: 35
 	},
@@ -278,21 +282,12 @@ const chars = {
 			fix_p2_left: 0
 		},
 
-		sheet3: {
-			img: "files/eliwood_sword_dodge.png",
-			width: 60, // 1008
-			height:	49, // 636
-			stand: 120,
-			adv: 300,
-			size: 120 - this.width , // deixar o size sempre 1 frame (144) a menos do total. menos 2 (288) se tiver dodge no ultimo frame
-			divPos: 41.4
-		},
-
 		fades: {
 			in: 500,
 			out: 100
 		},
 
+		name: "Florina",
 		hp1: 60, total1: 60, mt1: 7, hit1: 90, crit1: 60,
 		hp2: 60, total2: 60, mt2: 7, hit2: 90, crit2: 60
 	},
@@ -349,6 +344,7 @@ const chars = {
 			out: 100
 		},
 
+		name: "Oswin",
 		hp1: 90, total1: 90, mt1: 13, hit1: 60, crit1: 10,
 		hp2: 90, total2: 90, mt2: 13, hit2: 60, crit2: 10
 	},
@@ -405,6 +401,7 @@ const chars = {
 			out: 100
 		},
 
+		name: "Joshua",
 		hp1: 65, total1: 65, mt1: 6, hit1: 100, crit1: 85,
 		hp2: 65, total2: 65, mt2: 6, hit2: 100, crit2: 85
 	},
@@ -461,8 +458,9 @@ const chars = {
 			out: 100
 		},
 
-		hp1: 60, total1: 60, mt1: 8, hit1: 80, crit1: 40,
-		hp2: 60, total2: 60, mt2: 8, hit2: 80, crit2: 40
+		name: "Marth",
+		hp1: 70, total1: 70, mt1: 8, hit1: 85, crit1: 40,
+		hp2: 70, total2: 70, mt2: 8, hit2: 85, crit2: 40
 	},
 
 	lyn: {
@@ -517,6 +515,7 @@ const chars = {
 			out: 100
 		},
 
+		name: "Lyn",
 		hp1: 60, total1: 60, mt1: 10, hit1: 60, crit1: 60,
 		hp2: 60, total2: 60, mt2: 10, hit2: 60, crit2: 60
 	},
@@ -574,6 +573,7 @@ const chars = {
 			out: 100
 		},
 
+		name: "Forde",
 		hp1: 70, total1: 70, mt1: 8, hit1: 75, crit1: 40,
 		hp2: 70, total2: 70, mt2: 8, hit2: 75, crit2: 40
 	},
@@ -630,6 +630,7 @@ const chars = {
 			out: 100
 		},
 
+		name: "Bartre",
 		hp1: 80, total1: 80, mt1: 11, hit1: 65, crit1: 20,
 		hp2: 80, total2: 80, mt2: 11, hit2: 65, crit2: 20
 	},
@@ -686,8 +687,124 @@ const chars = {
 			out: 100
 		},
 
+		name: "Guy",
 		hp1: 55, total1: 55, mt1: 7, hit1: 90, crit1: 80,
 		hp2: 55, total2: 55, mt2: 7, hit2: 90, crit2: 80
+	},
+
+
+	dark: {
+		sheet1: {
+			img: "files/ike_sword_aether1.png",
+			width: 240, // 1008
+			height:	160, // 636
+			stand: 960,
+			adv: 540,
+			size: 720, // deixar o size sempre 1 frame (144) a menos do total. menos 2 (288) se tiver dodge no ultimo frame
+			colision: 7,
+			fxTimes: 1,
+			del_frames: 0, 
+			i_del: null,
+			i_final: 7,
+			fps: 100,
+
+			//css
+			position: "relative",
+			left: "70px",
+			right: "",
+			top: "16px",
+			bottom: "unset",
+			fix_p2_left: 0
+		},
+
+		sheet2: {
+			img: "files/lyn_sword_critical2.png",
+			width: 220, // 1008
+			height:	144, // 636
+			stand: 1980,
+			adv: 300,
+			size: 1760 , // deixar o size sempre 1 frame (144) a menos do total. menos 2 (288) se tiver dodge no ultimo frame
+			colision: 4,
+			fxTimes: 1,
+			del_frames: 2, 
+			i_del: 9,
+			i_final: 9,
+			fps: 100,
+
+			//css
+			position: "relative",
+			left: "94px",
+			right: "unset",
+			top: "18px",
+			bottom: "unset",
+			fix_p2_left: 0
+		},
+
+		fades: {
+			in: 500,
+			out: 100
+		},
+
+		name: "Kuro Heart",
+		hp1: 200, total1: 200, mt1: 20, hit1: 1000, crit1: 1,
+		hp2: 200, total2: 200, mt2: 20, hit2: 1000, crit2: 1
+	},
+
+	void: {
+		sheet1: {
+			img: "files/void_eliwood_lance_attack.png",
+			width: 143, // 1008
+			height:	89, // 636
+			stand: 858,
+			adv: 300,
+			size: 715, // deixar o size sempre 1 frame (144) a menos do total. menos 2 (288) se tiver dodge no ultimo frame
+			colision: 3,
+			fxTimes: 1,
+			del_frames: 1, 
+			i_del: 5,
+			i_final: 5,
+			fps: 130,
+
+			//css
+			position: "relative",
+			left: "86px",
+			right: "",
+			top: "2px",
+			bottom: "unset",
+			fix_p2_left: 0
+		},
+
+		sheet2: {
+			img: "files/void_eliwood_lance_critical.png",
+			width: 153, // 1008
+			height:	82, // 636
+			stand: 1071,
+			adv: 300,
+			size: 918 , // deixar o size sempre 1 frame (144) a menos do total. menos 2 (288) se tiver dodge no ultimo frame
+			colision: 3,
+			fxTimes: 2,
+			del_frames: 2, 
+			i_del: 5,
+			i_final: 5,
+			fps: 130,
+
+			//css
+			position: "relative",
+			left: "69px",
+			right: "unset",
+			top: "5px",
+			bottom: "unset",
+			fix_p2_left: 0
+		},
+
+		fades: {
+			in: 500,
+			out: 100
+		},
+
+		name: "Void Eliw", 
+		hp1: 70, total1: 70, mt1: 15, hit1: 90, crit1: 10,
+		hp2: 200, total2: 200, mt2: 15, hit2: 90, crit2: 10
 	},
 
 	empty1: {
@@ -742,6 +859,7 @@ const chars = {
 			out: 100
 		},
 
+		name: "Vazio",
 		hp1: 0, total1: 0, mt1: 0, hit1: 0, crit1: 0,
 		hp2: 0, total2: 0, mt2: 0, hit2: 0, crit2: 0
 	},
@@ -798,6 +916,7 @@ const chars = {
 			out: 100
 		},
 
+		name: "Vazio",
 		hp1: 0, total1: 0, mt1: 0, hit1: 0, crit1: 0,
 		hp2: 0, total2: 0, mt2: 0, hit2: 0, crit2: 0
 	},

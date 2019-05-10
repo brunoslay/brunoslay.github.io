@@ -216,9 +216,23 @@ td{
 	height: 77px;
 	width: 87px;
 	font-size: 15px;
-    margin: 10px;
+    margin: auto;
 
     color: #fafafa;
+	text-shadow: 1px 1px black;
+
+}
+
+.inline-block {
+
+	display: inline-block;
+
+}
+
+.display-char-name {
+
+	margin-top: 10px;
+	color: #fafafa;
 	text-shadow: 1px 1px black;
 
 }
@@ -232,4 +246,15 @@ h1 {
 #status1, #status2 {
 	color: #fafafa;
 	text-shadow: 1px 1px black;
+}
+
+
+.about-status {
+	color: #f0afff;
+	text-shadow: 1px 1px black;
+}
+
+.popup-status:hover {
+	color: #eea7ff;
+	/*text-shadow: 1px 1px black;*/
 }
