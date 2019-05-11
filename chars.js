@@ -170,8 +170,8 @@ const chars = {
 		},
 
 		name: "Hector",
-		hp1: 80, total1: 80, mt1: 11, hit1: 75, crit1: 15,
-		hp2: 80, total2: 80, mt2: 11, hit2: 75, crit2: 15
+		hp1: 75, total1: 75, mt1: 11, hit1: 75, crit1: 15,
+		hp2: 75, total2: 75, mt2: 11, hit2: 75, crit2: 15
 	},
 
 	ephraim: {
@@ -345,8 +345,8 @@ const chars = {
 		},
 
 		name: "Oswin",
-		hp1: 90, total1: 90, mt1: 13, hit1: 60, crit1: 10,
-		hp2: 90, total2: 90, mt2: 13, hit2: 60, crit2: 10
+		hp1: 80, total1: 80, mt1: 13, hit1: 60, crit1: 10,
+		hp2: 80, total2: 80, mt2: 13, hit2: 60, crit2: 10
 	},
 
 	joshua: {
@@ -631,8 +631,8 @@ const chars = {
 		},
 
 		name: "Bartre",
-		hp1: 80, total1: 80, mt1: 11, hit1: 65, crit1: 20,
-		hp2: 80, total2: 80, mt2: 11, hit2: 65, crit2: 20
+		hp1: 70, total1: 70, mt1: 11, hit1: 60, crit1: 20,
+		hp2: 70, total2: 70, mt2: 11, hit2: 60, crit2: 20
 	},
 
 	guy: {
@@ -804,7 +804,7 @@ const chars = {
 
 		name: "Void Eliw", 
 		hp1: 70, total1: 70, mt1: 15, hit1: 90, crit1: 10,
-		hp2: 200, total2: 200, mt2: 15, hit2: 90, crit2: 10
+		hp2: 180, total2: 180, mt2: 15, hit2: 90, crit2: 10
 	},
 
 	empty1: {
