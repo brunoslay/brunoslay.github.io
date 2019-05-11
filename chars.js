@@ -402,8 +402,8 @@ const chars = {
 		},
 
 		name: "Joshua",
-		hp1: 65, total1: 65, mt1: 6, hit1: 100, crit1: 85,
-		hp2: 65, total2: 65, mt2: 6, hit2: 100, crit2: 85
+		hp1: 65, total1: 65, mt1: 6, hit1: 90, crit1: 85,
+		hp2: 65, total2: 65, mt2: 6, hit2: 90, crit2: 85
 	},
 
 	marth: {
@@ -688,8 +688,8 @@ const chars = {
 		},
 
 		name: "Guy",
-		hp1: 55, total1: 55, mt1: 7, hit1: 90, crit1: 80,
-		hp2: 55, total2: 55, mt2: 7, hit2: 90, crit2: 80
+		hp1: 50, total1: 50, mt1: 7, hit1: 85, crit1: 80,
+		hp2: 50, total2: 50, mt2: 7, hit2: 85, crit2: 80
 	},
 
 
