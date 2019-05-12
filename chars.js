@@ -688,8 +688,8 @@ const chars = {
 		},
 
 		name: "Guy",
-		hp1: 50, total1: 50, mt1: 7, hit1: 85, crit1: 80,
-		hp2: 50, total2: 50, mt2: 7, hit2: 85, crit2: 80
+		hp1: 50, total1: 50, mt1: 7, hit1: 80, crit1: 60,
+		hp2: 50, total2: 50, mt2: 7, hit2: 80, crit2: 60
 	},
 
 
