@@ -1,0 +1,101 @@
+*{
+	color: white;
+	font-family: 'Poppins', sans-serif;
+
+}
+
+#intro-title {
+	    border-left: solid #2daaff 3px;
+}
+
+.mail-received {
+	border-radius: 25px;
+	padding: 40px 20px 20px 20px;
+	text-align: center
+}
+
+.cite-by {
+	margin-top: 10px;
+}
+
+#header-logo{
+
+	background-image: url('../img/logo_white.png');
+	background-position: center;
+	background-size: auto 100%;
+	background-repeat: no-repeat;
+	width: auto;
+	height: 300px;
+
+	margin-top: 30px;
+    /*margin-bottom: 100px;*/
+
+   /* position: absolute;
+    top: 75px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 6;
+    margin: 0 auto;*/
+
+
+}
+
+#carouselExampleControls{
+	width: 100%;
+}
+
+.back-girl{
+	background-image: url('../img/back2.jpg');
+	/*background-position: center;*/
+	background-size: 100%;
+	background-repeat: no-repeat;
+	background-attachment: ;
+	background-color: #404040;
+	height: 100vh;
+}
+
+.overhead{
+	background-color: rgba(0, 0, 0, 0.9);
+}
+
+.overlay {
+	height: 100vh;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.cont-main {
+	padding-top: 100px;
+}
+
+h3 {
+	text-transform: uppercase;
+	padding: 0 15px;
+	margin-bottom: 20px;
+}
+
+.btn{
+	border-radius: 25px;
+	padding: 10px 40px;
+}
+
+.w-100{
+	height: 500px;
+}
+
+.row-land2{
+	margin-top: 100px;
+}
+
+:root, body {
+	/*background-color: #404040;*/
+	background-color: #060606;
+}
+
+.land-footer {
+	height: 200px;
+}
+
+/*body{
+	background-color: #060606;
+}*/

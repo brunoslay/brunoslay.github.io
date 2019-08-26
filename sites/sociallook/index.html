@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+
+	<title>Social Look</title>
+	<meta name="description" content="The HTML5 Herald">
+	<meta name="author" content="SitePoint">
+
+	<link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
+
+	<script src="https://kit.fontawesome.com/bea6cfdea5.js"></script>
+
+	<link rel="shortcut icon" type="image/png" href="src/img/icon.png"/>
+
+
+	<!-- SLIM JQUERY AND POPPER -->
+
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+	<!-- BOOTSTRAP -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+	<!-- <link rel="stylesheet" href="src/css/reset.css?v=1.0"> -->
+	<link rel="stylesheet" href="src/css/style.css?v=1.0">
+
+	<!-- FULL JQUERY -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+	<!-- JQUERY VALIDATOR PLUGIN -->
+	<!-- <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script> -->
+
+
+	<script type="text/javascript">
+		
+		$(document).ready(function(){
+
+			buildMailSuccess = function (){
+				const mainContainer = document.querySelector(".cont-main");
+    				const newRow = document.createElement("div");
+    				newRow.classList.add("row");
+    				const newCol = document.createElement("div");
+    				newCol.classList.add("col-md-12");
+    				newCol.classList.add("mail-received");
+    				newCol.classList.add("border");
+    				newCol.classList.add("border-success");
+    				newCol.classList.add("rounded-20");
+    				const successText = document.createElement("h3");
+    				// successText.classList.add("col-md-12");
+    				successText.innerText = "Pronto! Agora você será um dos primeiros a receber nosso aplicativo.";
+
+    				newCol.appendChild(successText);
+    				newRow.appendChild(newCol);
+
+    				mainContainer.replaceChild(newRow, mainContainer.childNodes[1]);
+			}
+
+
+			const btn_send = document.querySelector("#btnSend");
+
+    		btnSend.onclick = function(){
+
+    			/*$.post( "server/save_mail.php", $( "#mailForm" ).serialize(), function(data){
+
+    				console.log(data);
+
+    				})
+    				.done(function(data){
+
+    					buildMailSuccess();		
+
+					})
+					.fail(function(){
+
+					console.log("fail");	
+				});*/
+
+				buildMailSuccess();
+
+    		}
+
+		});
+
+
+	</script>
+
+
+
+</head>
+
+<body>
+
+		<div class="">	
+			<nav style="height: 1px">
+				<ul>
+					<span style="visibility: hidden">a</span>
+				</ul>
+			</nav>
+
+			
+
+				<div class="container">
+					<!-- <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+					  <div class="carousel-inner">
+					    <div class="carousel-item active">
+					      <img class="d-block w-100" src="src/img/carousel/1.jpg" alt="First slide">
+					    </div>
+					    <div class="carousel-item">
+					      <img class="d-block w-100" src="src/img/carousel/2.jpg" alt="Second slide">
+					    </div>
+					    <div class="carousel-item">
+					      <img class="d-block w-100" src="src/img/carousel/3.jpg" alt="Third slide">
+					    </div>
+					  </div>
+					  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+					    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					    <span class="sr-only">Previous</span>
+					  </a>
+					  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+					    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+					    <span class="sr-only">Next</span>
+					  </a>
+					</div><div class="overhead" style="
+						height: 501px;
+					    position: absolute;
+					    top: 0;
+					    width: 100%;"></div> -->
+					<header id="header-logo"></header>
+				</div>
+				
+			
+		</div>
+
+		<div class="back-girl">
+		<div class="overlay">
+
+			<div class="container cont-main">
+			
+				<div class="row row-land1">
+
+					<div class="col-md-7">
+						<h3 id="intro-title">
+						Quer receber nosso aplicativo em primeira mão no lançamento? 
+							<p>
+								<p>
+						Então deixe seu email no campo abaixo.
+						</h3>
+					</div>
+
+					<div class="col-md-5"></div>
+					
+					<div class="col-md-12" align="">
+						<form method="post" id="mailForm" onsubmit="return false">
+						  <div class="form-group">
+						    <label for="exampleInputEmail1">Seu Email</label>
+						    <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+						    <small id="emailHelp" class="form-text text-muted"></small>
+						  </div>
+						  <button id="btnSend" type="submit" class="btn btn-info">Enviar</button>
+						</form>
+					</div>
+
+				</div>
+
+				<blockquote class="blockquote text-right cite-by">
+				  <p class="mb-0">
+				  	Você e a moda sempre conectados.
+				  </p>
+				  <footer class="blockquote-footer">
+				  	Social Look Team
+				  	<cite title="Source Title"></cite>
+				  </footer>
+				</blockquote>
+
+				
+
+
+				<!-- <div class="row row-land2">
+					<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+					  <div class="carousel-inner">
+					    <div class="carousel-item active">
+					      <img class="d-block w-100" src="src/img/carousel/1.jpg" alt="First slide">
+					    </div>
+					    <div class="carousel-item">
+					      <img class="d-block w-100" src="src/img/carousel/6.jpg" alt="Second slide">
+					    </div>
+					    <div class="carousel-item">
+					      <img class="d-block w-100" src="src/img/carousel/11.jpg" alt="Third slide">
+					    </div>
+					  </div>
+					  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+					    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					    <span class="sr-only">Previous</span>
+					  </a>
+					  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+					    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+					    <span class="sr-only">Next</span>
+					  </a>
+					</div>
+				</div> -->
+
+			</div>
+
+		</div>	
+		</div>
+
+
+		<!-- <footer class="land-footer">
+			<div class="container">
+				Você e a moda sempre conectados.
+			</div>
+		</footer> -->
+
+		<!-- <script src="js/scripts.js"></script> -->
+
+
+
+
+
+</body>
+</html>
