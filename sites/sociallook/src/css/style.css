@@ -55,6 +55,10 @@
 	height: 100vh;
 }
 
+.wrap-header{
+	padding: 2px;
+}
+
 .overhead{
 	background-color: rgba(0, 0, 0, 0.9);
 }
@@ -62,6 +66,14 @@
 .overlay {
 	height: 100vh;
     background-color: rgba(0, 0, 0, 0.9);
+    
+}
+
+@media screen and (max-width: 980px){
+	.overlay {
+		position: relative;
+		top: -1px;
+	}
 }
 
 .cont-main {
