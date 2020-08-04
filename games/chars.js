@@ -55,8 +55,8 @@ const chars = {
 		},
 
 		name: "Eirika",
-		hp1: 60, total1: 60, mt1: 8, hit1: 80, crit1: 60,
-		hp2: 60, total2: 60, mt2: 8, hit2: 80, crit2: 60
+		hp1: 35, total1: 35, mt1: 8, hit1: 80, crit1: 60,
+		hp2: 35, total2: 35, mt2: 8, hit2: 80, crit2: 60
 	},
 
 	eliwood: {
@@ -112,8 +112,8 @@ const chars = {
 		},
 
 		name: "Eliwood", 
-		hp1: 70, total1: 70, mt1: 10, hit1: 85, crit1: 25,
-		hp2: 70, total2: 70, mt2: 10, hit2: 85, crit2: 25
+		hp1: 45, total1: 45, mt1: 10, hit1: 85, crit1: 25,
+		hp2: 45, total2: 45, mt2: 10, hit2: 85, crit2: 25
 	},
 
 	hector: {
@@ -170,8 +170,8 @@ const chars = {
 		},
 
 		name: "Hector",
-		hp1: 75, total1: 75, mt1: 11, hit1: 75, crit1: 15,
-		hp2: 75, total2: 75, mt2: 11, hit2: 75, crit2: 15
+		hp1: 50, total1: 50, mt1: 11, hit1: 75, crit1: 15,
+		hp2: 50, total2: 50, mt2: 11, hit2: 75, crit2: 15
 	},
 
 	ephraim: {
@@ -229,8 +229,8 @@ const chars = {
 		},
 
 		name: "Ephraim",
-		hp1: 65, total1: 65, mt1: 9, hit1: 80, crit1: 35,
-		hp2: 65, total2: 65, mt2: 9, hit2: 80, crit2: 35
+		hp1: 30, total1: 30, mt1: 9, hit1: 80, crit1: 35,
+		hp2: 30, total2: 30, mt2: 9, hit2: 80, crit2: 35
 	},
 
 	florina: {
@@ -288,8 +288,8 @@ const chars = {
 		},
 
 		name: "Florina",
-		hp1: 60, total1: 60, mt1: 7, hit1: 90, crit1: 60,
-		hp2: 60, total2: 60, mt2: 7, hit2: 90, crit2: 60
+		hp1: 45, total1: 45, mt1: 7, hit1: 90, crit1: 60,
+		hp2: 45, total2: 45, mt2: 7, hit2: 90, crit2: 60
 	},
 
 	oswin: {
@@ -345,8 +345,8 @@ const chars = {
 		},
 
 		name: "Oswin",
-		hp1: 80, total1: 80, mt1: 13, hit1: 60, crit1: 10,
-		hp2: 80, total2: 80, mt2: 13, hit2: 60, crit2: 10
+		hp1: 55, total1: 55, mt1: 13, hit1: 60, crit1: 10,
+		hp2: 55, total2: 55, mt2: 13, hit2: 60, crit2: 10
 	},
 
 	joshua: {
@@ -402,8 +402,8 @@ const chars = {
 		},
 
 		name: "Joshua",
-		hp1: 65, total1: 65, mt1: 6, hit1: 90, crit1: 85,
-		hp2: 65, total2: 65, mt2: 6, hit2: 90, crit2: 85
+		hp1: 40, total1: 40, mt1: 6, hit1: 90, crit1: 85,
+		hp2: 40, total2: 40, mt2: 6, hit2: 90, crit2: 85
 	},
 
 	marth: {
@@ -459,8 +459,8 @@ const chars = {
 		},
 
 		name: "Marth",
-		hp1: 70, total1: 70, mt1: 8, hit1: 85, crit1: 40,
-		hp2: 70, total2: 70, mt2: 8, hit2: 85, crit2: 40
+		hp1: 45, total1: 45, mt1: 8, hit1: 85, crit1: 40,
+		hp2: 45, total2: 45, mt2: 8, hit2: 85, crit2: 40
 	},
 
 	lyn: {
@@ -516,8 +516,8 @@ const chars = {
 		},
 
 		name: "Lyn",
-		hp1: 60, total1: 60, mt1: 10, hit1: 60, crit1: 60,
-		hp2: 60, total2: 60, mt2: 10, hit2: 60, crit2: 60
+		hp1: 35, total1: 35, mt1: 10, hit1: 60, crit1: 60,
+		hp2: 35, total2: 35, mt2: 10, hit2: 60, crit2: 60
 	},
 
 
@@ -574,8 +574,8 @@ const chars = {
 		},
 
 		name: "Forde",
-		hp1: 70, total1: 70, mt1: 8, hit1: 75, crit1: 40,
-		hp2: 70, total2: 70, mt2: 8, hit2: 75, crit2: 40
+		hp1: 45, total1: 45, mt1: 8, hit1: 75, crit1: 40,
+		hp2: 45, total2: 45, mt2: 8, hit2: 75, crit2: 40
 	},
 
 	bartre: {
@@ -631,8 +631,8 @@ const chars = {
 		},
 
 		name: "Bartre",
-		hp1: 70, total1: 70, mt1: 11, hit1: 60, crit1: 20,
-		hp2: 70, total2: 70, mt2: 11, hit2: 60, crit2: 20
+		hp1: 45, total1: 45, mt1: 11, hit1: 60, crit1: 20,
+		hp2: 45, total2: 45, mt2: 11, hit2: 60, crit2: 20
 	},
 
 	guy: {
@@ -688,8 +688,8 @@ const chars = {
 		},
 
 		name: "Guy",
-		hp1: 50, total1: 50, mt1: 7, hit1: 75, crit1: 50,
-		hp2: 50, total2: 50, mt2: 7, hit2: 75, crit2: 50
+		hp1: 25, total1: 25, mt1: 7, hit1: 75, crit1: 50,
+		hp2: 25, total2: 25, mt2: 7, hit2: 75, crit2: 50
 	},
 
 
@@ -746,8 +746,8 @@ const chars = {
 		},
 
 		name: "Kuro Heart",
-		hp1: 200, total1: 200, mt1: 20, hit1: 1000, crit1: 1,
-		hp2: 200, total2: 200, mt2: 20, hit2: 1000, crit2: 1
+		hp1: 170, total1: 170, mt1: 20, hit1: 1000, crit1: 1,
+		hp2: 170, total2: 170, mt2: 20, hit2: 1000, crit2: 1
 	},
 
 	void: {
